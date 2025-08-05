@@ -15,6 +15,16 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -p 55422 -H ssh.lorseg.com >> ~/.ssh/known_hosts
 
+          # Явно указываем какой ключ и порт использовать
+          echo "
+          Host ssh.lorseg.com
+            HostName ssh.lorseg.com
+            Port 55422
+            User sego
+            IdentityFile ~/.ssh/id_ed25519
+            IdentitiesOnly yes
+          " > ~/.ssh/config
+
       - name: Test SSH connection
         run: |
-          ssh -p 55422 sego@ssh.lorseg.com "hostname && uptime"
+          ssh ssh.lorseg.com "hostname && uptime"
