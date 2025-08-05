@@ -1,14 +1,14 @@
-name: SSH Test Connection
+name: SSH Test
 
 on:
-  workflow_dispatch:  # запуск вручную из GitHub UI
+  workflow_dispatch:
 
 jobs:
-  test-ssh:
+  ssh-connect:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Set up SSH
+      - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
@@ -17,4 +17,4 @@ jobs:
 
       - name: Test SSH connection
         run: |
-          ssh -p 55422 sego@ssh.lorseg.com "echo ✅ Connected to $(hostname)"
+          ssh -p 55422 sego@ssh.lorseg.com "hostname && uptime"
